@@ -16,13 +16,23 @@ interface RyzeEndpoint {
 const RYZE_BASE_URL = process.env.RYZE_BASE_URL || "https://ryzeapi.cloud";
 const DEFAULT_INSTANCE = process.env.RYZE_DEFAULT_INSTANCE || "";
 
+function resolveInstanceToken(instance: string) {
+  const rawMap = process.env.RYZE_INSTANCE_TOKENS;
+  if (rawMap) {
+    try {
+      const parsed = JSON.parse(rawMap);
+      if (parsed[instance]) return parsed[instance];
+    } catch {}
+  }
+  return process.env.RYZE_TOKEN_INSTANCE;
+}
+
 async function ryzeRequest(
   endpoint: RyzeEndpoint,
   instance: string | undefined,
   body: Record<string, unknown> | undefined
 ) {
   const tokenAccount = process.env.RYZE_TOKEN_ACCOUNT;
-  const tokenInstance = process.env.RYZE_TOKEN_INSTANCE;
 
   const resolvedInstance = instance || DEFAULT_INSTANCE;
   if (endpoint.path.includes(":instance") && !resolvedInstance) {
@@ -41,6 +51,7 @@ async function ryzeRequest(
     }
     headers["Authorization"] = `Bearer ${tokenAccount}`;
   } else {
+    const tokenInstance = resolveInstanceToken(resolvedInstance);
     if (!tokenInstance) {
       return { error: "RYZE_TOKEN_INSTANCE não configurado no ambiente do gateway." };
     }
