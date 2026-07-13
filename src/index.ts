@@ -44,7 +44,7 @@ async function ryzeRequest(
     if (!tokenInstance) {
       return { error: "RYZE_TOKEN_INSTANCE não configurado no ambiente do gateway." };
     }
-    headers["apikey"] = tokenInstance;
+    headers["Authorization"] = `Bearer ${tokenInstance}`;
   }
 
   try {
