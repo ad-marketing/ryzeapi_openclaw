@@ -2,7 +2,7 @@
   "id": "ryze-api",
   "name": "Ryze API",
   "description": "Ferramentas para operar WhatsApp via Ryze API: mensagens, chats, grupos, comunidades, newsletters, perfil e gestão de instância.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "configSchema": {
     "type": "object",
     "properties": {},
