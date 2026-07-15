@@ -1,6 +1,6 @@
 {
   "name": "@ad-marketing/ryze-api",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "type": "module",
   "private": false,
   "scripts": {
